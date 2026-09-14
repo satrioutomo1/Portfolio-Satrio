@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Satrio Utomo — Portofolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-soft:#f7f8fa;
+    --text:#1a1a1a;
+    --text-dim:#6b7280;
+    --primary:#4f46e5;
+    --primary-soft:#eef2ff;
+    --border:#e5e7eb;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--text);
+    background:var(--bg);
+    line-height:1.6;
+  }
+  html{scroll-behavior:smooth;}
+  a{ text-decoration:none; color:inherit; }
+  .container{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  /* NAVBAR */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:960px; margin:0 auto; padding:16px 24px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .logo{ font-weight:700; font-size:16px; }
+  .nav-links{ display:flex; gap:28px; font-size:14px; font-weight:500; color:var(--text-dim); }
+  .nav-links a:hover{ color:var(--primary); }
+  @media (max-width:640px){ .nav-links{ display:none; } }
+
+  /* HERO */
+  .hero{
+    text-align:center;
+    padding:100px 24px 80px;
+    background:linear-gradient(180deg, var(--bg-soft), #fff);
+  }
+  .avatar{
+    width:112px; height:112px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #6366f1, #8b5cf6);
+    margin:0 auto 28px;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:36px; font-weight:700;
+    box-shadow:var(--shadow-lg);
+  }
+  .badge{
+    display:inline-block;
+    background:var(--primary-soft);
+    color:var(--primary);
+    font-size:13px;
+    font-weight:600;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:20px;
+  }
+  h1{ font-size:44px; font-weight:800; letter-spacing:-0.02em; }
+  .subtitle{
+    font-size:18px;
+    color:var(--text-dim);
+    max-width:520px;
+    margin:16px auto 0;
+  }
+  .hero-buttons{
+    display:flex; gap:14px; justify-content:center; margin-top:32px; flex-wrap:wrap;
+  }
+  .btn{
+    padding:12px 24px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary{
+    background:var(--primary);
+    color:#fff;
+    box-shadow:var(--shadow);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+  .btn-secondary{
+    background:#fff;
+    color:var(--text);
+    border:1px solid var(--border);
+  }
+  .btn-secondary:hover{ border-color:var(--primary); color:var(--primary); }
+
+  /* SECTIONS */
+  section{ padding:72px 0; }
+  .section-title{
+    font-size:28px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:8px;
+  }
+  .section-sub{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:15px;
+    margin-bottom:48px;
+  }
+
+  /* ABOUT */
+  .about-card{
+    background:var(--bg-soft);
+    border-radius:var(--radius);
+    padding:36px;
+    text-align:center;
+    max-width:680px;
+    margin:0 auto;
+  }
+  .about-card p{ color:var(--text-dim); font-size:16px; }
+
+  /* CARDS GRID (experience/projects) */
+  .card-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  @media (max-width:640px){ .card-grid{ grid-template-columns:1fr; } }
+  .card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:26px;
+    box-shadow:var(--shadow);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+  .card-icon{
+    width:44px; height:44px;
+    border-radius:10px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700;
+    margin-bottom:16px;
+  }
+  .card-date{ font-size:12.5px; color:var(--primary); font-weight:600; margin-bottom:6px; }
+  .card h3{ font-size:17px; font-weight:700; margin-bottom:4px; }
+  .card .card-role{ font-size:13.5px; color:var(--text-dim); margin-bottom:12px; }
+  .card ul{ padding-left:18px; color:var(--text-dim); font-size:14px; }
+  .card ul li{ margin-top:6px; }
+  .card p{ color:var(--text-dim); font-size:14.5px; }
+
+  /* SKILLS */
+  .skill-tags{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    max-width:680px; margin:0 auto;
+  }
+  .tag{
+    background:var(--bg-soft);
+    border:1px solid var(--border);
+    padding:9px 16px;
+    border-radius:999px;
+    font-size:13.5px;
+    font-weight:500;
+  }
+
+  /* CERT LIST */
+  .cert-card{
+    display:flex; justify-content:space-between; align-items:center;
+    background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px 24px; margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .cert-card h4{ font-size:15px; font-weight:600; }
+  .cert-card p{ font-size:13px; color:var(--text-dim); margin-top:4px; }
+  .cert-year{
+    background:var(--primary-soft); color:var(--primary);
+    font-size:12.5px; font-weight:600;
+    padding:6px 12px; border-radius:999px;
+    white-space:nowrap;
+  }
+
+  /* CONTACT / FOOTER */
+  .contact-section{
+    background:var(--bg-soft);
+    text-align:center;
+    border-radius:24px;
+    max-width:900px;
+    margin:0 auto;
+    padding:64px 32px;
+  }
+  .contact-section h2{ font-size:30px; font-weight:800; }
+  .contact-section p{ color:var(--text-dim); margin-top:12px; }
+  footer{
+    text-align:center;
+    padding:40px 24px;
+    color:var(--text-dim);
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Satrio Utomo</div>
+    <div class="nav-links">
+      <a href="#about">Tentang</a>
+      <a href="#experience">Pengalaman</a>
+      <a href="#projects">Proyek</a>
+      <a href="#skills">Skill</a>
+      <a href="#contact">Kontak</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="avatar">MSU</div>
+  <div class="badge">Terbuka untuk Peluang Magang</div>
+  <h1>Muhammad Satrio Utomo</h1>
+  <p class="subtitle">Mahasiswa D3 Elektronika Industri di Politeknik Negeri Jakarta. Fokus pada perancangan, pemrograman, dan integrasi sistem mikrokontroler.</p>
+  <div class="hero-buttons">
+    <a class="btn btn-primary" href="mailto:muhammad19satrio02@gmail.com">Hubungi Saya</a>
+    <a class="btn btn-secondary" href="#projects">Lihat Proyek</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <h2 class="section-title">Tentang Saya</h2>
+    <p class="section-sub">Sedikit tentang latar belakang saya</p>
+    <div class="about-card">
+      <p>Saya adalah mahasiswa aktif semester 5 program Diploma (D3) Teknik Elektro, Program Studi Elektronika Industri di Politeknik Negeri Jakarta, angkatan 2024. Memiliki pengalaman di bidang elektronika seperti merancang, memprogram, dan mengintegrasikan mikrokontroler dengan berbagai sensor dan sistem kontrol.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience" style="background:var(--bg-soft);">
+  <div class="container">
+    <h2 class="section-title">Pengalaman Magang</h2>
+    <p class="section-sub">Perjalanan profesional saya sejauh ini</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">01</div>
+        <div class="card-date">2026 · 6 Bulan</div>
+        <h3>PT Angkasa Pura Indonesia</h3>
+        <div class="card-role">Bandar Udara Internasional Halim Perdanakusuma — Divisi Elektro & IT</div>
+        <ul>
+          <li>Pemeliharaan dan perbaikan fasilitas keamanan bandara</li>
+          <li>Pemeliharaan fasilitas IT dan penunjang bandara</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon">02</div>
+        <div class="card-date">2023–2024 · 8 Bulan</div>
+        <h3>The Ritz-Carlton Jakarta Pacific Place</h3>
+        <div class="card-role">Departemen Engineering</div>
+        <ul>
+          <li>Pemeliharaan dan perakitan peralatan elektronika dapur & laundry</li>
+          <li>Monitoring penggunaan listrik harian gedung hotel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <h2 class="section-title">Proyek</h2>
+    <p class="section-sub">Beberapa proyek yang pernah saya kerjakan</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <div class="card-date">2026</div>
+        <h3>Smart Vocabulary Box</h3>
+        <p>Sistem smart box berbasis mikrokontroler untuk membantu pembelajaran kosakata.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-date">2025</div>
+        <h3>Smart Fermentation</h3>
+        <p>Staf divisi mekanik; merancang desain alat menggunakan AutoCAD.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔧</div>
+        <div class="card-date">2024</div>
+        <h3>Sistem Antrian Otomatis Arduino</h3>
+        <p>Sistem antrian digital menggunakan seven segment, push button, LCD, dan speaker.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:var(--bg-soft);">
+  <div class="container">
+    <h2 class="section-title">Keterampilan</h2>
+    <p class="section-sub">Tools dan kemampuan yang saya kuasai</p>
+    <div class="skill-tags">
+      <span class="tag">Proteus</span>
+      <span class="tag">AutoCAD</span>
+      <span class="tag">PLC</span>
+      <span class="tag">SCADA</span>
+      <span class="tag">Mikrotik</span>
+      <span class="tag">Arduino IDE</span>
+      <span class="tag">ESP32</span>
+      <span class="tag">Soldering & PCB</span>
+      <span class="tag">Microsoft Word</span>
+      <span class="tag">Microsoft Excel</span>
+      <span class="tag">Kerja Tim</span>
+      <span class="tag">Disiplin</span>
+    </div>
+  </div>
+</section>
+
+<section id="cert">
+  <div class="container">
+    <h2 class="section-title">Sertifikat & Organisasi</h2>
+    <p class="section-sub">Pengakuan dan kontribusi saya</p>
+    <div class="cert-card">
+      <div>
+        <h4>Sertifikasi Soldering & Perakitan Elektronik BNSP</h4>
+        <p>Menyolder, merakit, dan menguji komponen elektronik pada PCB</p>
+      </div>
+      <span class="cert-year">2024</span>
+    </div>
+    <div class="cert-card">
+      <div>
+        <h4>Panitia Acara E-Time (Elektro Time)</h4>
+        <p>Mengamankan dan membantu membuat SOP kegiatan acara</p>
+      </div>
+      <span class="cert-year">2026</span>
+    </div>
+    <div class="cert-card">
+      <div>
+        <h4>Panitia Acara Olahraga Elektro</h4>
+        <p>Mengoordinasikan logistik transportasi kegiatan</p>
+      </div>
+      <span class="cert-year">2025</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-section">
+      <h2>Mari Terhubung</h2>
+      <p>Terbuka untuk peluang magang dan kerja sama proyek elektronika.</p>
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="mailto:muhammad19satrio02@gmail.com">muhammad19satrio02@gmail.com</a>
+        <a class="btn btn-secondary" href="tel:+6287762511562">+62 877-6251-1562</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Muhammad Satrio Utomo — Politeknik Negeri Jakarta
+</footer>
+
+</body>
+</html>
