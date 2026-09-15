@@ -961,16 +961,20 @@
 
   applyLang(currentLang);
 
-  // ---------- Scroll reveal (with staggered children) ----------
+  // ---------- Scroll reveal (muncul saat masuk viewport, menghilang saat keluar) ----------
   var revealEls = document.querySelectorAll('.reveal');
   var observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
+      var staggerItems = entry.target.querySelectorAll('.stagger-item');
       if(entry.isIntersecting){
         entry.target.classList.add('visible');
-        var staggerItems = entry.target.querySelectorAll('.stagger-item');
         staggerItems.forEach(function(item, i){
           setTimeout(function(){ item.classList.add('visible'); }, i * 110);
         });
+      } else {
+        // keluar viewport -> sembunyikan lagi supaya muncul ulang saat di-scroll balik
+        entry.target.classList.remove('visible');
+        staggerItems.forEach(function(item){ item.classList.remove('visible'); });
       }
     });
   }, { threshold: 0.12 });
