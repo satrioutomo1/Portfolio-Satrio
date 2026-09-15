@@ -1012,6 +1012,37 @@
     });
   });
 
+  // ---------- Custom smooth scroll (lebih halus & konsisten di semua browser) ----------
+  function easeInOutCubic(t){
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  function smoothScrollTo(targetY, duration){
+    duration = duration || 700;
+    var startY = window.scrollY;
+    var diff = targetY - startY;
+    var startTime = null;
+    function step(currentTime){
+      if(startTime === null) startTime = currentTime;
+      var elapsed = currentTime - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, startY + diff * easeInOutCubic(progress));
+      if(progress < 1){ requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = link.getAttribute('href');
+      if(id.length < 2) return;
+      var target = document.querySelector(id);
+      if(!target) return;
+      e.preventDefault();
+      var navHeight = mainNav.offsetHeight;
+      var targetY = target.getBoundingClientRect().top + window.scrollY - navHeight - 4;
+      smoothScrollTo(Math.max(targetY, 0), 750);
+    });
+  });
+
   // ---------- Back to top ----------
   var backBtn = document.getElementById('backToTop');
   window.addEventListener('scroll', function(){
@@ -1019,7 +1050,7 @@
     else { backBtn.classList.remove('show'); }
   });
   backBtn.addEventListener('click', function(){
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    smoothScrollTo(0, 700);
   });
 
   // ---------- Nav hide on scroll down, show on scroll up ----------
@@ -1062,11 +1093,15 @@
 
   var copiedLabel = { id: 'Disalin!', en: 'Copied!' };
 
-  // ---------- Email button: open Gmail compose directly ----------
+  // ---------- Email button: mailto langsung di mobile (buka app Gmail/Mail), Gmail web di desktop ----------
   document.getElementById('emailBtn').addEventListener('click', function(){
     var email = 'muhammad19satrio02@gmail.com';
-    var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
-    window.open(url, '_blank');
+    if(isMobile){
+      window.location.href = 'mailto:' + email;
+    } else {
+      var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
+      window.open(url, '_blank');
+    }
   });
 
   // ---------- Phone button: tel: on mobile, copy on desktop ----------
@@ -1090,7 +1125,7 @@
     });
   });
 
-  // ---------- Contact form -> Gmail compose with prefilled content ----------
+  // ---------- Contact form -> mailto di mobile, Gmail compose web di desktop ----------
   document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('cfName').value.trim();
@@ -1099,9 +1134,14 @@
     var to = 'muhammad19satrio02@gmail.com';
     var subject = 'Pesan dari Portofolio — ' + name;
     var body = message + '\n\n— ' + name + ' (' + email + ')';
-    var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) +
-      '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    window.open(url, '_blank');
+    if(isMobile){
+      window.location.href = 'mailto:' + encodeURIComponent(to) +
+        '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    } else {
+      var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) +
+        '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      window.open(url, '_blank');
+    }
   });
 </script>
 
