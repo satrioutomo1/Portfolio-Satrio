@@ -60,7 +60,7 @@
   .circuit-layer.left{ left:0; }
   .circuit-layer.right{ right:0; transform:scaleX(-1); }
   .circuit-layer svg{ width:100%; height:100%; }
-  section{ position:relative; overflow:hidden; }
+  section{ position:relative; overflow:hidden; scroll-margin-top:76px; }
 
   /* NAVBAR */
   nav{
@@ -68,8 +68,9 @@
     background:color-mix(in srgb, var(--bg) 85%, transparent);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
-    transition:background 0.3s ease, border-color 0.3s ease;
+    transition:background 0.3s ease, border-color 0.3s ease, transform 0.35s ease;
   }
+  nav.nav-hidden{ transform:translateY(-100%); }
   .nav-inner{
     max-width:1040px; margin:0 auto; padding:14px 24px;
     display:flex; justify-content:space-between; align-items:center;
@@ -463,23 +464,111 @@
     font-family:var(--mono);
   }
 
-  /* CONTACT — asymmetric */
-  .contact-grid{
+  /* CONTACT v2 */
+  .contact-grid-v2{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:40px;
+    align-items:start;
+  }
+  @media (max-width:800px){ .contact-grid-v2{ grid-template-columns:1fr; } }
+
+  .contact-left{ display:flex; flex-direction:column; gap:14px; position:relative; }
+  .contact-item{
+    display:flex;
     align-items:center;
-    background:var(--bg-soft);
+    gap:16px;
+    background:var(--card-bg);
     border:1px solid var(--border);
-    border-radius:24px;
-    padding:56px 48px;
+    border-radius:14px;
+    padding:16px 18px;
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    text-align:left;
+    font-family:inherit;
+    transition:transform 0.2s ease, border-color 0.2s ease;
+    width:100%;
   }
-  @media (max-width:800px){
-    .contact-grid{ grid-template-columns:1fr; text-align:center; padding:44px 28px; }
+  .contact-item:hover{ transform:translateX(6px); border-color:var(--primary); }
+  .contact-icon{
+    width:42px; height:42px;
+    border-radius:10px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
   }
-  .contact-grid h2{ font-size:30px; font-weight:800; }
-  .contact-buttons{ display:flex; flex-direction:column; gap:14px; }
-  .contact-buttons .btn{ text-align:center; }
+  .contact-icon svg{ width:20px; height:20px; }
+  .contact-item-text{ display:flex; flex-direction:column; flex-grow:1; min-width:0; }
+  .contact-label{ font-size:12px; color:var(--text-dim); font-weight:600; }
+  .contact-value{ font-size:14.5px; color:var(--text); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .contact-copy{
+    width:34px; height:34px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dim);
+    flex-shrink:0;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .contact-copy svg{ width:16px; height:16px; }
+  .contact-copy:hover{ background:var(--bg-soft); color:var(--primary); }
+
+  .copy-toast{
+    position:absolute;
+    top:-14px; left:50%;
+    transform:translate(-50%,-8px);
+    background:var(--text);
+    color:var(--bg);
+    font-size:12.5px;
+    font-weight:600;
+    padding:6px 14px;
+    border-radius:999px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:5;
+  }
+  .copy-toast.show{ opacity:1; transform:translate(-50%,0); }
+
+  .social-row{ display:flex; gap:12px; margin-top:8px; }
+  .social-icon{
+    width:44px; height:44px;
+    border-radius:12px;
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dim);
+    box-shadow:var(--shadow);
+    transition:transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .social-icon svg{ width:19px; height:19px; }
+  .social-icon:hover{ transform:translateY(-4px); color:var(--primary); border-color:var(--primary); }
+
+  .contact-form{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .form-row{ display:flex; flex-direction:column; gap:6px; }
+  .form-row label{ font-size:13px; font-weight:600; color:var(--text-dim); }
+  .form-row input, .form-row textarea{
+    font-family:inherit;
+    font-size:14.5px;
+    padding:11px 14px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--bg-soft);
+    color:var(--text);
+    resize:vertical;
+    transition:border-color 0.2s ease;
+  }
+  .form-row input:focus, .form-row textarea:focus{ outline:none; border-color:var(--primary); }
+  .form-note{ font-size:12px; color:var(--text-dim); text-align:center; }
 
   footer{
     text-align:center;
@@ -513,7 +602,7 @@
 
 <!-- circuit svg template reused via inline copies -->
 
-<nav>
+<nav id="mainNav">
   <div class="nav-inner">
     <div class="logo">Satrio Utomo</div>
     <div class="nav-right">
@@ -546,7 +635,7 @@
         <span data-id='Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman <span class="highlight">mikrokontroler</span>, serta integrasi sensor, PLC, dan SCADA.' data-en='D3 <span class="highlight">Industrial Electronics</span> student at PNJ. Focused on designing and programming <span class="highlight">microcontrollers</span>, plus integrating sensors, PLC, and SCADA.'>Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman <span class="highlight">mikrokontroler</span>, serta integrasi sensor, PLC, dan SCADA.</span>
       </p>
       <div class="hero-buttons">
-        <a class="btn btn-primary" href="mailto:muhammad19satrio02@gmail.com" data-id="Halo, Hubungi Saya!" data-en="Say Hello!">Halo, Hubungi Saya!</a>
+        <a class="btn btn-primary" href="#contact" data-id="Halo, Hubungi Saya!" data-en="Say Hello!">Halo, Hubungi Saya!</a>
         <a class="btn btn-secondary" href="#projects" data-id="Lihat Proyek" data-en="View Projects">Lihat Proyek</a>
       </div>
       <div class="stats-inline">
@@ -728,14 +817,70 @@
 <section id="contact" class="reveal reveal-scale">
   <div class="circuit-layer left" id="circuit7"></div>
   <div class="container">
-    <div class="contact-grid">
-      <div>
-        <h2 data-id="Kontak" data-en="Contact">Kontak</h2>
+    <div class="section-head left-align">
+      <h2 class="section-title" data-id="Kontak" data-en="Contact">Kontak</h2>
+      <p class="section-sub" data-id="Punya pertanyaan atau peluang kerja sama? Hubungi saya lewat salah satu cara di bawah." data-en="Have a question or collaboration opportunity? Reach me through one of the options below.">Punya pertanyaan atau peluang kerja sama? Hubungi saya lewat salah satu cara di bawah.</p>
+    </div>
+
+    <div class="contact-grid-v2">
+      <div class="contact-left">
+        <button class="contact-item" id="emailBtn" type="button">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13 20.5 6.5"/></svg>
+          </span>
+          <span class="contact-item-text">
+            <span class="contact-label" data-id="Email" data-en="Email">Email</span>
+            <span class="contact-value">muhammad19satrio02@gmail.com</span>
+          </span>
+          <span class="contact-copy" data-copy="muhammad19satrio02@gmail.com" title="Salin email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          </span>
+        </button>
+
+        <button class="contact-item" id="phoneBtn" type="button">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1.3 1.3 0 0 1 1.3-.3c1.2.4 2.5.6 3.8.6a1.3 1.3 0 0 1 1.3 1.3V20a1.3 1.3 0 0 1-1.3 1.3C10.9 21.3 2.7 13.1 2.7 3.5A1.3 1.3 0 0 1 4 2.2h3.2A1.3 1.3 0 0 1 8.5 3.5c0 1.3.2 2.6.6 3.8.1.4 0 .9-.3 1.3z"/></svg>
+          </span>
+          <span class="contact-item-text">
+            <span class="contact-label" data-id="Telepon" data-en="Phone">Telepon</span>
+            <span class="contact-value">+62 877-6251-1562</span>
+          </span>
+          <span class="contact-copy" data-copy="+6287762511562" title="Salin nomor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          </span>
+        </button>
+
+        <div class="copy-toast" id="copyToast" data-id="Disalin!" data-en="Copied!">Disalin!</div>
+
+        <div class="social-row">
+          <a class="social-icon" href="https://www.instagram.com/satriouryoo" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </a>
+          <a class="social-icon" href="https://www.linkedin.com/in/muhammad-satrio-utomo-5a4bb6381" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="7.5" y1="10" x2="7.5" y2="17"/><circle cx="7.5" cy="6.8" r="0.9" fill="currentColor" stroke="none"/><path d="M11.5 17v-4.2c0-1.6 1-2.6 2.4-2.6 1.3 0 2.1.9 2.1 2.6V17"/></svg>
+          </a>
+          <a class="social-icon" href="https://github.com/satrioutomo1" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.2-.5-1.2.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7 1 .7 2v3c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+          </a>
+        </div>
       </div>
-      <div class="contact-buttons">
-        <a class="btn btn-primary" href="mailto:muhammad19satrio02@gmail.com">muhammad19satrio02@gmail.com</a>
-        <a class="btn btn-secondary" href="tel:+6287762511562">+62 877-6251-1562</a>
-      </div>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <label data-id="Nama" data-en="Name">Nama</label>
+          <input type="text" name="name" id="cfName" required placeholder="" >
+        </div>
+        <div class="form-row">
+          <label data-id="Email Kamu" data-en="Your Email">Email Kamu</label>
+          <input type="email" name="email" id="cfEmail" required placeholder="">
+        </div>
+        <div class="form-row">
+          <label data-id="Pesan" data-en="Message">Pesan</label>
+          <textarea name="message" id="cfMessage" rows="4" required placeholder=""></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-id="Kirim Pesan" data-en="Send Message">Kirim Pesan</button>
+        <p class="form-note" data-id="Tombol ini akan membuka Gmail dengan pesan kamu sudah terisi otomatis." data-en="This button opens Gmail with your message pre-filled.">Tombol ini akan membuka Gmail dengan pesan kamu sudah terisi otomatis.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -871,6 +1016,88 @@
   });
   backBtn.addEventListener('click', function(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ---------- Nav hide on scroll down, show on scroll up ----------
+  var mainNav = document.getElementById('mainNav');
+  var lastScrollY = window.scrollY;
+  window.addEventListener('scroll', function(){
+    var currentY = window.scrollY;
+    if(currentY > lastScrollY && currentY > 120){
+      mainNav.classList.add('nav-hidden');
+    } else {
+      mainNav.classList.remove('nav-hidden');
+    }
+    lastScrollY = currentY;
+  });
+
+  // ---------- Detect mobile ----------
+  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+  // ---------- Copy to clipboard + toast ----------
+  var toast = document.getElementById('copyToast');
+  var toastTimer = null;
+  function showToast(text){
+    toast.textContent = text;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).catch(function(){});
+    } else {
+      var tmp = document.createElement('textarea');
+      tmp.value = text;
+      document.body.appendChild(tmp);
+      tmp.select();
+      try{ document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(tmp);
+    }
+  }
+
+  var copiedLabel = { id: 'Disalin!', en: 'Copied!' };
+
+  // ---------- Email button: open Gmail compose directly ----------
+  document.getElementById('emailBtn').addEventListener('click', function(){
+    var email = 'muhammad19satrio02@gmail.com';
+    var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
+    window.open(url, '_blank');
+  });
+
+  // ---------- Phone button: tel: on mobile, copy on desktop ----------
+  document.getElementById('phoneBtn').addEventListener('click', function(){
+    var phone = '+6287762511562';
+    if(isMobile){
+      window.location.href = 'tel:' + phone;
+    } else {
+      copyText(phone);
+      showToast(currentLang === 'en' ? copiedLabel.en : copiedLabel.id);
+    }
+  });
+
+  // ---------- Copy icon buttons ----------
+  document.querySelectorAll('.contact-copy').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      var val = el.getAttribute('data-copy');
+      copyText(val);
+      showToast(currentLang === 'en' ? copiedLabel.en : copiedLabel.id);
+    });
+  });
+
+  // ---------- Contact form -> Gmail compose with prefilled content ----------
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('cfName').value.trim();
+    var email = document.getElementById('cfEmail').value.trim();
+    var message = document.getElementById('cfMessage').value.trim();
+    var to = 'muhammad19satrio02@gmail.com';
+    var subject = 'Pesan dari Portofolio — ' + name;
+    var body = message + '\n\n— ' + name + ' (' + email + ')';
+    var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) +
+      '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.open(url, '_blank');
   });
 </script>
 
