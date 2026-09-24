@@ -499,6 +499,7 @@
     flex-shrink:0;
   }
   .contact-icon svg{ width:20px; height:20px; }
+  .contact-icon-wa{ background:rgba(37,211,102,0.15); color:#25D366; }
   .contact-item-text{ display:flex; flex-direction:column; flex-grow:1; min-width:0; }
   .contact-label{ font-size:12px; color:var(--text-dim); font-weight:600; }
   .contact-value{ font-size:14.5px; color:var(--text); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -610,7 +611,7 @@
         <a href="#about" data-id="Tentang" data-en="About">Tentang</a>
         <a href="#experience" data-id="Pengalaman" data-en="Experience">Pengalaman</a>
         <a href="#projects" data-id="Proyek" data-en="Projects">Proyek</a>
-        <a href="#skills" data-id="Keterampilan" data-en="Skills">Keterampilan</a>
+        <a href="#skills" data-id="Skill" data-en="Skills">Skill</a>
         <a href="#contact" data-id="Kontak" data-en="Contact">Kontak</a>
       </div>
       <div class="icon-toggle">
@@ -632,7 +633,7 @@
       <div class="hero-eyebrow" data-id="Halo, perkenalkan" data-en="Hello, introducing">Halo, perkenalkan</div>
       <h1>Muhammad Satrio<br>Utomo</h1>
       <p class="subtitle">
-        <span data-id='Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman mikrokontroler, serta integrasi sensor, PLC, dan SCADA.' data-en='D3 <span class="highlight">Industrial Electronics</span> student at PNJ. Focused on designing and programming microcontrollers, plus integrating sensors, PLC, and SCADA.'>Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman mikrokontroler, serta integrasi sensor, PLC, dan SCADA.</span>
+        <span data-id='Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman <span class="highlight">mikrokontroler</span>, serta integrasi sensor, PLC, dan SCADA.' data-en='D3 <span class="highlight">Industrial Electronics</span> student at PNJ. Focused on designing and programming <span class="highlight">microcontrollers</span>, plus integrating sensors, PLC, and SCADA.'>Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman <span class="highlight">mikrokontroler</span>, serta integrasi sensor, PLC, dan SCADA.</span>
       </p>
       <div class="hero-buttons">
         <a class="btn btn-primary" href="#contact" data-id="Halo, Hubungi Saya!" data-en="Say Hello!">Halo, Hubungi Saya!</a>
@@ -850,6 +851,16 @@
           </span>
         </button>
 
+        <a class="contact-item" id="waBtn" href="https://wa.me/6287762511562" target="_blank" rel="noopener">
+          <span class="contact-icon contact-icon-wa">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 3.5A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.3A10.4 10.4 0 0 0 20.5 3.5z"/><path d="M8.2 8.4c.2-.6.5-.6.8-.6h.6c.2 0 .5 0 .7.5.2.5.7 1.7.8 1.8.1.2.1.4 0 .6-.1.2-.2.3-.4.5-.2.2-.4.4-.2.7.2.4 1 1.6 2.2 2.6 1.5 1.3 2 1.2 2.3 1.1.3-.1.5-.4.7-.7.2-.2.4-.2.6-.1l1.7.9c.2.1.4.2.4.4.1.2.1 1-.3 1.4-.4.5-1.4 1-2.3.9-.9-.1-3.1-1-4.8-2.9-1.8-1.9-2.7-3.9-2.8-4.4-.2-.6-.3-1.3.1-1.7z" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span class="contact-item-text">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value">+62 877-6251-1562</span>
+          </span>
+        </a>
+
         <div class="copy-toast" id="copyToast" data-id="Disalin!" data-en="Copied!">Disalin!</div>
 
         <div class="social-row">
@@ -961,20 +972,16 @@
 
   applyLang(currentLang);
 
-  // ---------- Scroll reveal (muncul saat masuk viewport, menghilang saat keluar) ----------
+  // ---------- Scroll reveal (with staggered children) ----------
   var revealEls = document.querySelectorAll('.reveal');
   var observer = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
-      var staggerItems = entry.target.querySelectorAll('.stagger-item');
       if(entry.isIntersecting){
         entry.target.classList.add('visible');
+        var staggerItems = entry.target.querySelectorAll('.stagger-item');
         staggerItems.forEach(function(item, i){
           setTimeout(function(){ item.classList.add('visible'); }, i * 110);
         });
-      } else {
-        // keluar viewport -> sembunyikan lagi supaya muncul ulang saat di-scroll balik
-        entry.target.classList.remove('visible');
-        staggerItems.forEach(function(item){ item.classList.remove('visible'); });
       }
     });
   }, { threshold: 0.12 });
@@ -1012,37 +1019,6 @@
     });
   });
 
-  // ---------- Custom smooth scroll (lebih halus & konsisten di semua browser) ----------
-  function easeInOutCubic(t){
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-  function smoothScrollTo(targetY, duration){
-    duration = duration || 700;
-    var startY = window.scrollY;
-    var diff = targetY - startY;
-    var startTime = null;
-    function step(currentTime){
-      if(startTime === null) startTime = currentTime;
-      var elapsed = currentTime - startTime;
-      var progress = Math.min(elapsed / duration, 1);
-      window.scrollTo(0, startY + diff * easeInOutCubic(progress));
-      if(progress < 1){ requestAnimationFrame(step); }
-    }
-    requestAnimationFrame(step);
-  }
-  document.querySelectorAll('a[href^="#"]').forEach(function(link){
-    link.addEventListener('click', function(e){
-      var id = link.getAttribute('href');
-      if(id.length < 2) return;
-      var target = document.querySelector(id);
-      if(!target) return;
-      e.preventDefault();
-      var navHeight = mainNav.offsetHeight;
-      var targetY = target.getBoundingClientRect().top + window.scrollY - navHeight - 4;
-      smoothScrollTo(Math.max(targetY, 0), 750);
-    });
-  });
-
   // ---------- Back to top ----------
   var backBtn = document.getElementById('backToTop');
   window.addEventListener('scroll', function(){
@@ -1050,21 +1026,29 @@
     else { backBtn.classList.remove('show'); }
   });
   backBtn.addEventListener('click', function(){
-    smoothScrollTo(0, 700);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // ---------- Nav hide on scroll down, show on scroll up ----------
   var mainNav = document.getElementById('mainNav');
-  var lastScrollY = window.scrollY;
-  window.addEventListener('scroll', function(){
-    var currentY = window.scrollY;
-    if(currentY > lastScrollY && currentY > 120){
+  var lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  var navTicking = false;
+  function handleNavScroll(){
+    var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if(currentY > lastScrollY && currentY > 60){
       mainNav.classList.add('nav-hidden');
     } else {
       mainNav.classList.remove('nav-hidden');
     }
     lastScrollY = currentY;
-  });
+    navTicking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!navTicking){
+      window.requestAnimationFrame(handleNavScroll);
+      navTicking = true;
+    }
+  }, { passive: true });
 
   // ---------- Detect mobile ----------
   var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
@@ -1093,15 +1077,11 @@
 
   var copiedLabel = { id: 'Disalin!', en: 'Copied!' };
 
-  // ---------- Email button: mailto langsung di mobile (buka app Gmail/Mail), Gmail web di desktop ----------
+  // ---------- Email button: open Gmail compose directly ----------
   document.getElementById('emailBtn').addEventListener('click', function(){
     var email = 'muhammad19satrio02@gmail.com';
-    if(isMobile){
-      window.location.href = 'mailto:' + email;
-    } else {
-      var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
-      window.open(url, '_blank');
-    }
+    var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
+    window.open(url, '_blank');
   });
 
   // ---------- Phone button: tel: on mobile, copy on desktop ----------
@@ -1125,7 +1105,7 @@
     });
   });
 
-  // ---------- Contact form -> mailto di mobile, Gmail compose web di desktop ----------
+  // ---------- Contact form -> Gmail compose with prefilled content ----------
   document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('cfName').value.trim();
@@ -1134,14 +1114,9 @@
     var to = 'muhammad19satrio02@gmail.com';
     var subject = 'Pesan dari Portofolio — ' + name;
     var body = message + '\n\n— ' + name + ' (' + email + ')';
-    if(isMobile){
-      window.location.href = 'mailto:' + encodeURIComponent(to) +
-        '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    } else {
-      var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) +
-        '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      window.open(url, '_blank');
-    }
+    var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to) +
+      '&su=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.open(url, '_blank');
   });
 </script>
 
