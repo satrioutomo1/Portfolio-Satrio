@@ -236,11 +236,22 @@
     border-left:2px solid var(--border);
   }
   .stats-inline .stat-item:first-child{ padding-left:0; border-left:none; }
+  .stats-inline .num-row{
+    display:flex;
+    align-items:baseline;
+  }
   .stats-inline .num{
     font-size:26px;
     font-weight:800;
     color:var(--text);
     font-family:var(--mono);
+  }
+  .stats-inline .num-suffix{
+    font-size:20px;
+    font-weight:800;
+    color:var(--primary);
+    font-family:var(--mono);
+    margin-left:1px;
   }
   .stats-inline .label{
     font-size:12.5px;
@@ -344,16 +355,22 @@
   }
   .section-head{ text-align:center; margin-bottom:48px; }
   .section-head.left-align{ text-align:left; margin-bottom:36px; }
+  #about .section-head.left-align{ margin-bottom:26px; }
 
   /* ABOUT — asymmetric */
   .about-grid{
     display:grid;
     grid-template-columns:1fr 0.8fr;
     gap:48px;
-    align-items:center;
+    align-items:start;
   }
   @media (max-width:800px){ .about-grid{ grid-template-columns:1fr; } }
-  .about-text p{ color:var(--text-dim); font-size:16px; }
+  .about-text{
+    position:relative;
+    padding-left:22px;
+    border-left:3px solid var(--primary);
+  }
+  .about-text p{ color:var(--text-dim); font-size:16px; line-height:1.75; }
   .stats-col{ display:flex; flex-direction:column; gap:22px; }
   .stat-card{
     background:var(--card-bg);
@@ -544,6 +561,7 @@
   }
   .social-icon svg{ width:19px; height:19px; }
   .social-icon:hover{ transform:translateY(-4px); color:var(--primary); border-color:var(--primary); }
+  .social-icon-wa:hover{ color:#25D366; border-color:#25D366; }
 
   .contact-form{
     background:var(--card-bg);
@@ -630,10 +648,10 @@
   <div class="circuit-layer left" id="circuit1"></div>
   <div class="container">
     <div class="hero-text">
-      <div class="hero-eyebrow" data-id="Halo, perkenalkan" data-en="Hello, introducing">Halo, perkenalkan</div>
+      <div class="hero-eyebrow" data-id="Halo, perkenalkan saya" data-en="Hi, let me introduce myself">Halo, perkenalkan saya</div>
       <h1>Muhammad Satrio<br>Utomo</h1>
       <p class="subtitle">
-        <span data-id='Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman <span class="highlight">mikrokontroler</span>, serta integrasi sensor, PLC, dan SCADA.' data-en='D3 <span class="highlight">Industrial Electronics</span> student at PNJ. Focused on designing and programming <span class="highlight">microcontrollers</span>, plus integrating sensors, PLC, and SCADA.'>Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di PNJ. Fokus pada perancangan dan pemrograman <span class="highlight">mikrokontroler</span>, serta integrasi sensor, PLC, dan SCADA.</span>
+        <span data-id='Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di Politeknik Negeri Jakarta. Fokus pada perancangan dan integrasi <span class="highlight">mikrokontroler</span> dengan berbagai sensor dan sistem kontrol PLC.' data-en='D3 <span class="highlight">Industrial Electronics</span> student at Jakarta State Polytechnic. Focused on designing and integrating <span class="highlight">microcontrollers</span> with various sensors and PLC control systems.'>Mahasiswa D3 <span class="highlight">Elektronika Industri</span> di Politeknik Negeri Jakarta. Fokus pada perancangan dan integrasi <span class="highlight">mikrokontroler</span> dengan berbagai sensor dan sistem kontrol PLC.</span>
       </p>
       <div class="hero-buttons">
         <a class="btn btn-primary" href="#contact" data-id="Halo, Hubungi Saya!" data-en="Say Hello!">Halo, Hubungi Saya!</a>
@@ -641,16 +659,16 @@
       </div>
       <div class="stats-inline">
         <div class="stat-item">
-          <div class="num" data-count="14">0</div>
+          <div class="num-row"><div class="num" data-count="14">0</div></div>
           <div class="label" data-id="Bulan Magang" data-en="Internship Months">Bulan Magang</div>
         </div>
         <div class="stat-item">
-          <div class="num" data-count="3">0</div>
+          <div class="num-row"><div class="num" data-count="4">0</div><span class="num-suffix">+</span></div>
           <div class="label" data-id="Proyek" data-en="Projects">Proyek</div>
         </div>
         <div class="stat-item">
-          <div class="num" data-count="5">0</div>
-          <div class="label" data-id="Semester" data-en="Semester">Semester</div>
+          <div class="num-row"><div class="num" data-count="15">0</div><span class="num-suffix">Y</span></div>
+          <div class="label" data-id="Tahun Pendidikan" data-en="Years of Education">Tahun Pendidikan</div>
         </div>
       </div>
     </div>
@@ -672,7 +690,7 @@
     </div>
     <div class="about-grid">
       <div class="about-text">
-        <p data-id="Saya adalah mahasiswa aktif semester 5 program Diploma (D3) Teknik Elektro, Program Studi Elektronika Industri di Politeknik Negeri Jakarta, angkatan 2024. Memiliki pengalaman di bidang elektronika seperti merancang, memprogram, dan mengintegrasikan mikrokontroler dengan berbagai sensor dan sistem kontrol." data-en="I am currently a 5th-semester student in the Diploma (D3) Electrical Engineering program, majoring in Industrial Electronics, at Jakarta State Polytechnic, class of 2024. I have experience in electronics such as designing, programming, and integrating microcontrollers with various sensors and control systems.">Saya adalah mahasiswa aktif semester 5 program Diploma (D3) Teknik Elektro, Program Studi Elektronika Industri di Politeknik Negeri Jakarta, angkatan 2024. Memiliki pengalaman di bidang elektronika seperti merancang, memprogram, dan mengintegrasikan mikrokontroler dengan berbagai sensor dan sistem kontrol.</p>
+        <p data-id="Saya adalah mahasiswa program Diploma 3 (D3) jurusan Teknik Elektro, Program Studi Elektronika Industri di Politeknik Negeri Jakarta, angkatan 2024. Memiliki pengalaman di bidang elektronika seperti merancang, memprogram, dan mengintegrasikan mikrokontroler dengan berbagai sensor dan sistem kontrol." data-en="I am a Diploma 3 (D3) Electrical Engineering student, majoring in Industrial Electronics, at Jakarta State Polytechnic, class of 2024. I have experience in electronics such as designing, programming, and integrating microcontrollers with various sensors and control systems.">Saya adalah mahasiswa program Diploma 3 (D3) jurusan Teknik Elektro, Program Studi Elektronika Industri di Politeknik Negeri Jakarta, angkatan 2024. Memiliki pengalaman di bidang elektronika seperti merancang, memprogram, dan mengintegrasikan mikrokontroler dengan berbagai sensor dan sistem kontrol.</p>
       </div>
       <div class="stats-col">
         <div class="stat-card">
@@ -749,6 +767,12 @@
         <div class="card-date">2025</div>
         <h3>Smart Fermentation</h3>
         <p data-id="Staf divisi mekanik; merancang desain alat menggunakan AutoCAD." data-en="Mechanical division staff; designed the tool's form using AutoCAD.">Staf divisi mekanik; merancang desain alat menggunakan AutoCAD.</p>
+      </div>
+      <div class="card proj-item stagger-item" data-tag="arduino embedded">
+        <div class="card-icon">🌧️</div>
+        <div class="card-date">2025</div>
+        <h3 data-id="Sistem Sensor Hujan" data-en="Rain Sensor System">Sistem Sensor Hujan</h3>
+        <p data-id="Sistem sensor hujan digital menggunakan sensor hujan, mikrokontroler Arduino Uno, dan LCD I2C." data-en="A digital rain sensor system using a rain sensor, an Arduino Uno microcontroller, and an I2C LCD.">Sistem sensor hujan digital menggunakan sensor hujan, mikrokontroler Arduino Uno, dan LCD I2C.</p>
       </div>
       <div class="card proj-item stagger-item" data-tag="arduino embedded">
         <div class="card-icon">🔧</div>
@@ -851,19 +875,12 @@
           </span>
         </button>
 
-        <a class="contact-item" id="waBtn" href="https://wa.me/6287762511562" target="_blank" rel="noopener">
-          <span class="contact-icon contact-icon-wa">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 3.5A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.3A10.4 10.4 0 0 0 20.5 3.5z"/><path d="M8.2 8.4c.2-.6.5-.6.8-.6h.6c.2 0 .5 0 .7.5.2.5.7 1.7.8 1.8.1.2.1.4 0 .6-.1.2-.2.3-.4.5-.2.2-.4.4-.2.7.2.4 1 1.6 2.2 2.6 1.5 1.3 2 1.2 2.3 1.1.3-.1.5-.4.7-.7.2-.2.4-.2.6-.1l1.7.9c.2.1.4.2.4.4.1.2.1 1-.3 1.4-.4.5-1.4 1-2.3.9-.9-.1-3.1-1-4.8-2.9-1.8-1.9-2.7-3.9-2.8-4.4-.2-.6-.3-1.3.1-1.7z" fill="currentColor" stroke="none"/></svg>
-          </span>
-          <span class="contact-item-text">
-            <span class="contact-label">WhatsApp</span>
-            <span class="contact-value">+62 877-6251-1562</span>
-          </span>
-        </a>
-
         <div class="copy-toast" id="copyToast" data-id="Disalin!" data-en="Copied!">Disalin!</div>
 
         <div class="social-row">
+          <a class="social-icon social-icon-wa" href="https://wa.me/6287762511562" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 3.5A10.4 10.4 0 0 0 3.3 16.4L2 22l5.8-1.3A10.4 10.4 0 0 0 20.5 3.5z"/><path d="M8.2 8.4c.2-.6.5-.6.8-.6h.6c.2 0 .5 0 .7.5.2.5.7 1.7.8 1.8.1.2.1.4 0 .6-.1.2-.2.3-.4.5-.2.2-.4.4-.2.7.2.4 1 1.6 2.2 2.6 1.5 1.3 2 1.2 2.3 1.1.3-.1.5-.4.7-.7.2-.2.4-.2.6-.1l1.7.9c.2.1.4.2.4.4.1.2.1 1-.3 1.4-.4.5-1.4 1-2.3.9-.9-.1-3.1-1-4.8-2.9-1.8-1.9-2.7-3.9-2.8-4.4-.2-.6-.3-1.3.1-1.7z" fill="currentColor" stroke="none"/></svg>
+          </a>
           <a class="social-icon" href="https://www.instagram.com/satriouryoo" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
           </a>
@@ -897,7 +914,7 @@
 </section>
 
 <footer>
-  © 2026 Muhammad Satrio Utomo — Politeknik Negeri Jakarta
+  <span data-id="© 2026 Muhammad Satrio Utomo — Hak Cipta Dilindungi" data-en="© 2026 Muhammad Satrio Utomo — All Rights Reserved">© 2026 Muhammad Satrio Utomo — Hak Cipta Dilindungi</span>
 </footer>
 
 <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">↑</button>
