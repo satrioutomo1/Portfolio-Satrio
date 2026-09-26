@@ -46,6 +46,12 @@
   html{scroll-behavior:smooth;}
   a{ text-decoration:none; color:inherit; }
   .container{ max-width:1040px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+  @media (min-width:1440px){
+    .container, .nav-inner{ max-width:1280px; }
+  }
+  @media (min-width:1800px){
+    .container, .nav-inner{ max-width:1480px; }
+  }
 
   /* CIRCUIT DECORATIONS */
   .circuit-layer{
@@ -139,12 +145,18 @@
   .hero{
     padding:70px 0 90px;
     background:var(--bg);
+    display:flex;
+    align-items:center;
+  }
+  @media (min-width:841px){
+    .hero{ min-height:calc(100vh - 73px); padding:40px 0; }
   }
   .hero .container{
     display:grid;
     grid-template-columns:1fr 0.95fr;
     align-items:center;
     gap:50px;
+    width:100%;
   }
   @media (max-width:840px){
     .hero .container{ grid-template-columns:1fr; text-align:center; }
